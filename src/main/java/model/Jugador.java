@@ -76,6 +76,7 @@ public class Jugador {
      * Incrementamos el numero de las partidas jugadas
      */
 
+
     /**
      * Mostramos la información del jugador
      * @return

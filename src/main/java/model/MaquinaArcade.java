@@ -72,22 +72,6 @@ public class MaquinaArcade {
     }
 
     /**
-     * Creamos el constructor para poder crear el jugador de forma más rápida en nuestro Main
-     * @param nombreMaquina
-     * @param generoMaquina
-     * @param precioPartida
-     */
-    public MaquinaArcade (String nombreMaquina, String generoMaquina, int precioPartida){
-        this.nombreMaquina = nombreMaquina;
-        this.generoMaquina = generoMaquina;
-        this.precioPartida = precioPartida;
-        this.estaActiva=true;
-        this.contadorPartidasJugadas=0;
-        this.mejoresPuntuaciones =  new int[3];
-        this.mejoresJugadores = new Jugador[3];
-    }
-
-    /**
      * Funcionalidades mínimas:
      *      --> Activas y Desactivar la maquina
      *      --> Consultar si está activa
@@ -104,6 +88,22 @@ public class MaquinaArcade {
      */
 
     /**
+     * Creamos el constructor para poder crear el jugador de forma más rápida en nuestro Main
+     * @param nombreMaquina
+     * @param generoMaquina
+     * @param precioPartida
+     */
+    public MaquinaArcade (String nombreMaquina, String generoMaquina, int precioPartida){
+        this.nombreMaquina = nombreMaquina;
+        this.generoMaquina = generoMaquina;
+        this.precioPartida = precioPartida;
+        this.estaActiva=true;
+        this.contadorPartidasJugadas=0;
+        this.mejoresPuntuaciones =  new int[3];
+        this.mejoresJugadores = new Jugador[3];
+    }
+
+    /**
      * Activar o desactivar la máquina, si la máquina esta activa la desactivo y viceversa
      */
     public void ActivarDesactivarMaquina (){
@@ -118,11 +118,14 @@ public class MaquinaArcade {
      * Consulta actividad de la máquina
      */
     public String ComprobarActividad (){
+        boolean activa = false;
         String actividad = "";
         if (estaActiva){
             actividad = "La máquina está activa";
+            activa = true;
         }else {
             actividad = "La máquina está desactiva";
+            activa = false;
         }
         return actividad;
     }
