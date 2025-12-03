@@ -1,5 +1,7 @@
 package model;
 
+import utils.Utils;
+
 public class SalaRecreativa {
     private MaquinaArcade [] maquinasArcade;
     private Jugador [] jugadores;
@@ -64,11 +66,11 @@ public class SalaRecreativa {
      */
     public Jugador buscarJugadorPorID (String identificadorJugador){
         Jugador jugadorAux = null;
-        boolean jugadorEncontrado = false;
+
         for (int i = 0; i < jugadores.length; i++){
             if (this.jugadores[i] != null && this.jugadores[i].getIdentificadorJugador().equals(identificadorJugador)){
                 jugadorAux = this.jugadores[i];
-                jugadorEncontrado = true;
+
             }
         }
         return jugadorAux;
@@ -90,5 +92,70 @@ public class SalaRecreativa {
         }
         return maquinaAux;
     }
+
+    /**
+     * Añadimos a un jugador
+     * @param jugador
+     * @return
+     */
+    public boolean anhadirJugador (Jugador jugador){
+        boolean jugadoranhadido = false;
+            if (jugador != null) {
+                for (int i = 0; i < jugadores.length && !jugadoranhadido; i++) {
+                    this.jugadores[i] = jugador;
+                    jugadoranhadido = true;
+                }
+            }
+        return jugadoranhadido;
+    }
+
+    /**
+     * Anñadimos una maquina
+     * @param maquinaArcade
+     * @return
+     */
+    public boolean anhadirMaquina (MaquinaArcade maquinaArcade){
+        boolean maquinaAnhadida = false;
+        if (maquinaArcade != null) {
+            for (int i = 0; i < maquinasArcade.length && !maquinaAnhadida; i++) {
+                this.maquinasArcade[i] = maquinaArcade;
+                maquinaAnhadida = true;
+            }
+        }
+        return maquinaAnhadida;
+    }
+
+    /**
+     * Obtenemos el jugador que haya jugado mas partidas ya que es el mas activo
+     * @return nombreJugadorMasPartidas
+     */
+    public String jugadorMasActivo(){
+        String nombreJugadorMasPartidas = "";
+        int numeroMaxPartidas = 0;
+        for (int i = 0 ; i < jugadores.length; i++){
+           if (jugadores[i].getNumeroPartidasJugador() > numeroMaxPartidas){
+               numeroMaxPartidas = jugadores[i].getNumeroPartidasJugador();
+               nombreJugadorMasPartidas = jugadores[i].getNombreJugador();
+           }
+        }
+        return nombreJugadorMasPartidas;
+    }
+
+    /**
+     * Devolvemos una cadena que contiende el nombre de la maquina con mas partidas jugadas
+     * @return
+     */
+    public String maquinaMasPartidas(){
+        String maquinaMasPartidasJugadas = "";
+        int numeroMaxPartidas = 0;
+        for (int i = 0 ; i < maquinasArcade.length; i++){
+            if (maquinasArcade[i].getContadorPartidasJugadas() > numeroMaxPartidas){
+                numeroMaxPartidas = maquinasArcade[i].getContadorPartidasJugadas();
+                maquinaMasPartidasJugadas = maquinasArcade[i].getNombreMaquina();
+            }
+        }
+        return maquinaMasPartidasJugadas;
+    }
+
 
 }
