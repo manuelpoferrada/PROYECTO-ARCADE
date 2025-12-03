@@ -1,5 +1,7 @@
 package model;
 
+import utils.Utils;
+
 /**
  * Creamos los atributos del Array "MaquinaArcade"
  */
@@ -40,8 +42,7 @@ public class MaquinaArcade {
      * GETTERS
      * He escogido todos porque quiero mostrar por pantalla todos los atributos de MaquinaArcade
      */
-    public String getNombreMaquina() {
-        return nombreMaquina;
+    public String getNombreMaquina() { return nombreMaquina;
     }
     public int getPrecioPartida() {
         return precioPartida;
@@ -59,33 +60,20 @@ public class MaquinaArcade {
         return mejoresJugadores;
     }
 
+    //MÉTODOS DE NUESTRA MAQUINAARCADE MÍNIMOS PARA HACER QUE FUNCIONE
+
+    /**
+     * ToString para mostrar la información de la máquina
+     * @return
+     */
     public String toString(){
         return "La máquina se llama: "+this.nombreMaquina+
                 "\nEl genero de la máquina es: "+this.generoMaquina+
                 "\nEl precio de cada partida es: "+this.precioPartida+"C"+
                 "\nEstado: "+ComprobarActividad()+
                 "\nSe han jugado "+this.contadorPartidasJugadas+
-                "\n~~~~~~~~~~ R A N K I N G ~~~~~~~~~~"+
-                "\nTop 1: "+mejoresPuntuaciones[0]+" con el jugador "+mejoresJugadores[0]+
-                "\nTop 2: "+mejoresPuntuaciones[1]+" con el jugador "+mejoresJugadores[1]+
-                "\nTap 3: "+mejoresPuntuaciones[2]+" con el jugador "+mejoresJugadores[2];
+                mostrarRanking();
     }
-
-    /**
-     * Funcionalidades mínimas:
-     *      --> Activas y Desactivar la maquina
-     *      --> Consultar si está activa
-     *      --> Permitir a un jugador jugar una partida
-     *          >> Puntuacion aleatoria en cada partida (0-9999) y sumar 1 a la cantidad de partidas
-     *          >> Cuando sea la partida 100/200/300... la maquina se desactiva
-     *          >> Hacer y mostrar el Ranking
-     *          >> Devolver la puntuación de cada partida
-     *      --> Mostrar información del jugador
-     *          >> Patidas Jugadas
-     *          >> Estado
-     *          >> Ranking
-     *          >> Más...
-     */
 
     /**
      * Creamos el constructor para poder crear el jugador de forma más rápida en nuestro Main
@@ -118,16 +106,102 @@ public class MaquinaArcade {
      * Consulta actividad de la máquina
      */
     public String ComprobarActividad (){
-        boolean activa = false;
         String actividad = "";
         if (estaActiva){
             actividad = "La máquina está activa";
-            activa = true;
         }else {
             actividad = "La máquina está desactiva";
-            activa = false;
         }
         return actividad;
+    }
+
+    /**
+     * Método que actualiza todo mi ranking, pero no lo muestra
+     * @param nuevaPuntuacion
+     * @param jugador
+     */
+    private void actualizarRanking(int nuevaPuntuacion, Jugador jugador) {
+
+        //COMPROBAR TOP 1
+        if (nuevaPuntuacion > mejoresPuntuaciones[0]) {
+
+            //Mover Top 2 al Top 3
+            mejoresPuntuaciones[2] = mejoresPuntuaciones[1];
+            mejoresJugadores[2] = mejoresJugadores[1];
+            //Mover Top 1 al Top 2
+            mejoresPuntuaciones[1] = mejoresPuntuaciones[0];
+            mejoresJugadores[1] = mejoresJugadores[0];
+            //Poner el Top 1
+            mejoresPuntuaciones[0] = nuevaPuntuacion;
+            mejoresJugadores[0] = jugador;
+            System.out.println("¡NUEVO RÉCORD! " + jugador.getNombreJugador() + " ha entrado en el Top 1 con " + nuevaPuntuacion + " puntos.");
+
+        //COMPROBAR TOP 2
+        } else if (nuevaPuntuacion > mejoresPuntuaciones[1]) {
+
+            //Ponemos el Top 2 en Top 3
+            mejoresPuntuaciones[2] = mejoresPuntuaciones[1];
+            mejoresJugadores[2] = mejoresJugadores[1];
+
+            //Ponemos un nuevo Top 2
+            mejoresPuntuaciones[1] = nuevaPuntuacion;
+            mejoresJugadores[1] = jugador;
+            System.out.println("¡NUEVO RÉCORD! " + jugador.getNombreJugador() + " ha entrado en el Top 2 con " + nuevaPuntuacion + " puntos.");
+
+        //COMPROBAR TOP 3
+        } else if (nuevaPuntuacion > mejoresPuntuaciones[2]) {
+
+            //Ponemos un nuevo Top 3
+            mejoresPuntuaciones[2] = nuevaPuntuacion;
+            mejoresJugadores[2] = jugador;
+            System.out.println("¡NUEVO RÉCORD! " + jugador.getNombreJugador() +  " ha entrado en el Top 3 con " + nuevaPuntuacion + " puntos.");
+        }
+    }
+
+    /**
+     * Comprobamos que la maquina se apague cada 100 partidas
+     */
+    private void comprobarMantenimiento(){
+        if (this.contadorPartidasJugadas > 0 && this.contadorPartidasJugadas%100 == 0){
+            estaActiva = false;
+            System.out.println("La maquina "+this.nombreMaquina+" ha sido desactivada!");
+        }
+    }
+
+    /**
+     * Creamos el metodo para que el jugador pueda jugar una partida
+     * @param jugadorVaJugar
+     * @return
+     */
+    public int jugarPartida (Jugador jugadorVaJugar){
+        int puntuacion = Utils.generarAleatorio(0,9999);
+        this.contadorPartidasJugadas++;
+        actualizarRanking(puntuacion,jugadorVaJugar);
+        comprobarMantenimiento();
+        return puntuacion;
+    }
+
+    /**
+     * Mostramos el ranking en el toString de la maquina en el caso de que este completo
+     * @return
+     */
+    public String mostrarRanking() {
+        String ranking = "\n~~~~~~~~~~ R A N K I N G de " + this.nombreMaquina + " ~~~~~~~~~~\n";
+        for (int i = 0; i < 3; i++) {
+            String nombreJugador;
+
+            //Si el puesto esta vacio hacemos una salida por pantalla de que esta vacio
+            if (mejoresJugadores[i] != null) {
+                nombreJugador = mejoresJugadores[i].getNombreJugador();
+            } else {
+                nombreJugador = "Vacío";
+            }
+
+            // Sino
+            ranking += "Top " + (i + 1) + ": " + mejoresPuntuaciones[i] + " puntos, conseguidos por: " + nombreJugador;
+            System.out.println("");
+        }
+        return ranking;
     }
 
 }

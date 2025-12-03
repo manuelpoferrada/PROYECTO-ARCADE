@@ -1,5 +1,7 @@
 package model;
 
+import utils.Utils;
+
 public class SalaRecreativa {
     private MaquinaArcade [] maquinasArcade;
     private Jugador [] jugadores;
@@ -90,5 +92,34 @@ public class SalaRecreativa {
         }
         return maquinaAux;
     }
+
+    /**
+     * Añadimos a un jugador
+     * @param jugador
+     * @return
+     */
+    public boolean anhadirJugador (Jugador jugador){
+        boolean jugadoranhadido = false;
+            if (jugador != null) {
+                for (int i = 0; i < jugadores.length && !jugadoranhadido; i++) {
+                    this.jugadores[i] = jugador;
+                    jugadoranhadido = true;
+                }
+            }
+        return jugadoranhadido;
+    }
+
+    public boolean anhadirMaquina (MaquinaArcade maquinaArcade){
+        boolean maquinaAnhadida = false;
+        if (maquinaArcade != null) {
+            for (int i = 0; i < maquinasArcade.length && !maquinaAnhadida; i++) {
+                this.maquinasArcade[i] = maquinaArcade;
+                maquinaAnhadida = true;
+            }
+        }
+        return maquinaAnhadida;
+    }
+
+
 
 }

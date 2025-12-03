@@ -1,25 +1,12 @@
 package utils;
 
+import model.Jugador;
+
 import java.util.InputMismatchException;
+import java.util.Random;
 import java.util.Scanner;
 
-public class utils {
-
-    /**
-     *
-     * @param
-     * @return
-     * public static boolean validaDNI(String dni){
-     *         boolean esValido = false;
-     *         if (dni != null && !dni.isEmpty()){
-     *             if (dni.length() == 9){
-     *                 esValido = true;
-     *             }
-     *         }
-     *         return esValido;
-     *
-     *     }
-     */
+public class Utils {
 
     /**
      * Pedimos un numero entre un rango controlando las excepciones
@@ -52,6 +39,30 @@ public class utils {
         return numero;
     }
 
+    /**
+     * Pedimos una cadena controlando las excepciones
+     * @param mensaje
+     * @return
+     */
+    public static String pideCadena(String mensaje) {
+        Scanner sc = new Scanner(System.in);
+        String cadena;
+        boolean esValido = false;
+
+        do {
+            System.out.print(mensaje);
+            cadena = sc.nextLine();
+
+            //Si ha introducido algo en la cadena nos salimos del bucle
+            if (cadena.length() > 0) {
+                esValido = true;
+            // En caso de estar el campo vacio que salte un error
+            } else {
+                System.out.println("Error: No puede dejar este campo vacío.");
+            }
+        } while (!esValido);
+        return cadena;
+    }
 
     /**
      * Mostramos el menu por pantalla y pedimos una opcion
@@ -77,23 +88,25 @@ public class utils {
         return opcion;
     }
 
-    public static void ejecucionDeResultado (int opcion){
-        switch (opcion){
-            case 1: //RegistrarNuevoJugador; beak;
-            case 2: //Registrar una nueva máquina de arcade; break;
-            case 3: //Recargar créditos a un jugador; break;
-            case 4: //Listar jugadores; break;
-            case 5: //Listar maquinas; break;
-            case 6: //Listar maquinas activas; break;
-            case 7: //Realizar el mantenimiento a una maquina (reactivarla); break;
-            case 8: //Jugar una partida; break;
-            case 9: //Mostrar el jugador más activo; break;
-            case 10: //Mostrar la máquina mas usada; break;
-            case 11: //Mostrar el ranking de una maquina; break;
-            case 12: //Dar de baja una máquina; break;
-            case 13: //Editar una maquina de arcade; break;
-            case 14: //Editar un jugador; break;
+    //public static Jugador pedirJugador (){
+    //    Jugador nuevoJugador = null;
+    //    String nombre = pideCadena("Introduce el nombre del jugador: ");
+    //    String id = pideCadena("introduce identi...:")
+    //    nuevoJugador = new Jugador(nombre,)
+    //}
+
+    /**
+     * Generamos un numero Aleatorio entre 0 y 9999 para saber cuanta puntuacion tiene un usuario
+     * @return
+     */
+    public static int generarAleatorio(int min, int max) {
+        if (min > max) {
+            throw new IllegalArgumentException("El límite inferior (min) no puede ser mayor que el límite superior (max).");
         }
+        Random random = new Random();
+        // nextInt(max - min + 1) genera números desde 0 hasta (max - min)
+        return random.nextInt(max - min + 1) + min;
     }
+
 
 }

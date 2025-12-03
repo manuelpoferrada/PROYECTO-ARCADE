@@ -1,18 +1,20 @@
 package model;
 
-import utils.utils;
+import utils.Utils;
 
 /**
  * Creamos los atributos del Array "Jugador"
  */
-
 public class Jugador {
     private String nombreJugador;
     private String identificadorJugador;
     private int creditosDisponibles;
     private int numeroPartidasJugador;
 
-
+    /**
+     * SETTERS
+     * @param nombreJugador
+     */
     public void setNombreJugador(String nombreJugador) {
         this.nombreJugador = nombreJugador;
     }
@@ -21,6 +23,10 @@ public class Jugador {
         this.creditosDisponibles = creditosDisponibles;
     }
 
+    /**
+     * GETTERS
+     * @return
+     */
     public int getNumeroPartidasJugador() {
         return numeroPartidasJugador;
     }
@@ -37,44 +43,50 @@ public class Jugador {
         return nombreJugador;
     }
 
+    public void setNumeroPartidasJugador(int numeroPartidasJugador) {
+        this.numeroPartidasJugador = numeroPartidasJugador;
+    }
+
+    //MÉTODOS DE NUESTRO JUGADOR MÍNIMOS PARA HACER QUE FUNCIONE
+
     /**
      * Creamos el constructor para poder crear el jugador de forma más rápida en nuestro Main
      * @param nombreJugador
      * @param identificadorJugador
-     * @param creditosDisponibles
-     * @param numeroPartidasJugador
      */
-    public Jugador(String nombreJugador, String identificadorJugador, int creditosDisponibles, int numeroPartidasJugador){
+    public Jugador(String nombreJugador, String identificadorJugador){
         this.nombreJugador = nombreJugador;
         this.identificadorJugador = identificadorJugador;
-        this.creditosDisponibles = creditosDisponibles;
-        this.numeroPartidasJugador = numeroPartidasJugador;
+        this.creditosDisponibles = 100;
+        this.numeroPartidasJugador = 0;
     }
-
-    /**
-     * Funcionalidades mínimas:
-     *      --> Recargar créditos
-     *      --> Gastar créditos (solo si tiene suficientes)
-     *      --> Incrementar el número de partidas jugadas
-     *      --> Mostrar información del jugador
-     */
 
     /**
      * Recargamos los creditos del jugador
      */
     public void recargarCreditos (){
-        int creditosSumar = utils.pideNumero(10,100,"Ingrese desde 10 hasta 100 Créditos: ","¡¡ ERROR, debe ser un numero entero entre 10 y 100 !! ");
+        int creditosSumar = Utils.pideNumero(10,100,"Ingrese desde 10 hasta 100 Créditos: ","¡¡ ERROR, debe ser un numero entero entre 10 y 100 !! ");
         this.creditosDisponibles += creditosSumar;
     }
 
     /**
      * Creamos el metodo para gastar los creditos en la máquina
      */
-
-
+    public boolean gastarCreditos(int costePartida) {
+        // Validación obligatoria: Comprobar que el jugador tiene créditos suficientes
+        if (costePartida > 0 && this.creditosDisponibles >= costePartida) {
+            this.creditosDisponibles -= costePartida; // Resta los créditos
+            return true;
+        }
+        return false; //No se ha podido restar porque no hay creditos disponibles
+    }
     /**
      * Incrementamos el numero de las partidas jugadas
      */
+    public int incrementarNumPartidas (){
+        numeroPartidasJugador++;
+        return numeroPartidasJugador;
+    }
 
 
     /**
@@ -88,6 +100,7 @@ public class Jugador {
                 "\nHa jugado "+this.numeroPartidasJugador+" partidas";  //No hace falta poner el this pq no hay posibilidad de confunsión,
         //pero es para afianzar bien que el this se refiere a los datos de fuera.
     }
+
 }
 
 
