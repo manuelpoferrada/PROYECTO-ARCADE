@@ -18,6 +18,7 @@ public class Jugador {
     public void setNombreJugador(String nombreJugador) {
         this.nombreJugador = nombreJugador;
     }
+
     public void setCreditosDisponibles(int creditosDisponibles) {
         this.creditosDisponibles = creditosDisponibles;
     }
@@ -32,9 +33,11 @@ public class Jugador {
     public int getCreditosDisponibles() {
         return creditosDisponibles;
     }
+
     public String getIdentificadorJugador() {
         return identificadorJugador;
     }
+
     public String getNombreJugador() {
         return nombreJugador;
     }

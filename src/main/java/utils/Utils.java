@@ -110,4 +110,6 @@ public class Utils {
         // nextInt(max - min + 1) genera números desde 0 hasta (max - min)
         return random.nextInt(max - min + 1) + min;
     }
+
+
 }
