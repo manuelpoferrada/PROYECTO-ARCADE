@@ -14,6 +14,7 @@ public class MaquinaArcade {
     private int contadorPartidasJugadas;
     private int [] mejoresPuntuaciones;
     private Jugador [] mejoresJugadores;
+    private int puntuacioncadaPartida;
 
     /**
      * SETTERS
@@ -59,6 +60,9 @@ public class MaquinaArcade {
     public Jugador[] getMejoresJugadores() {
         return mejoresJugadores;
     }
+    public int getPuntuacioncadaPartida() {
+        return puntuacioncadaPartida;
+    }
 
     //MÉTODOS DE NUESTRA MAQUINAARCADE MÍNIMOS PARA HACER QUE FUNCIONE
 
@@ -92,15 +96,27 @@ public class MaquinaArcade {
     }
 
     /**
-     * Activar o desactivar la máquina, si la máquina esta activa la desactivo y viceversa
+     * Activar la máquina, si la máquina esta activa la desactivo y viceversa
      */
-    public void ActivarDesactivarMaquina (){
+    public void ActivarMaquina (){
         if (estaActiva){
             estaActiva = false;
-        } else if (!estaActiva){
-            estaActiva = true;
+        } else {
+            System.out.println(" La máquina ya estaba activa ");
         }
     }
+
+    /**
+     * Desactivar la máquina, si la máquina esta activa la desactivo y viceversa
+     */
+    public void DesactivarMaquina (){
+        if (!estaActiva){
+            estaActiva = true;
+        } else {
+            System.out.println(" La máquina ya estaba desactiva ");
+        }
+    }
+
 
     /**
      * Consulta actividad de la máquina
@@ -174,11 +190,11 @@ public class MaquinaArcade {
      * @return
      */
     public int jugarPartida (Jugador jugadorVaJugar){
-        int puntuacion = Utils.generarAleatorio(0,9999);
+        this.puntuacioncadaPartida = Utils.generarAleatorio(0,9999);
         this.contadorPartidasJugadas++;
-        actualizarRanking(puntuacion,jugadorVaJugar);
+        actualizarRanking(this.puntuacioncadaPartida,jugadorVaJugar);
         comprobarMantenimiento();
-        return puntuacion;
+        return this.puntuacioncadaPartida;
     }
 
     /**
@@ -188,7 +204,7 @@ public class MaquinaArcade {
     public String mostrarRanking() {
         String ranking = "\n~~~~~~~~~~ R A N K I N G de " + this.nombreMaquina + " ~~~~~~~~~~\n";
         for (int i = 0; i < 3; i++) {
-            String nombreJugador;
+            String nombreJugador = " ";
 
             //Si el puesto esta vacio hacemos una salida por pantalla de que esta vacio
             if (mejoresJugadores[i] != null) {
@@ -198,11 +214,9 @@ public class MaquinaArcade {
             }
 
             // Sino
-            ranking += "Top " + (i + 1) + ": " + mejoresPuntuaciones[i] + " puntos, conseguidos por: " + nombreJugador;
-            System.out.println("");
+            ranking += "\nTop " + (i + 1) + ": " + mejoresPuntuaciones[i] + " puntos, conseguidos por: " + nombreJugador;
         }
         return ranking;
     }
-
 }
 

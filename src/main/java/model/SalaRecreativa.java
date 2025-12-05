@@ -1,10 +1,15 @@
 package model;
 
-import utils.Utils;
-
 public class SalaRecreativa {
     private MaquinaArcade [] maquinasArcade;
     private Jugador [] jugadores;
+    private int numeroJugadores = 0;
+    private int numeroMaquinas = 0;
+
+    public SalaRecreativa() {
+        this.jugadores = new Jugador[50];
+        this.maquinasArcade = new MaquinaArcade[20];
+    }
 
     /**
      * Funcionalidades mínimas:
@@ -42,6 +47,34 @@ public class SalaRecreativa {
         return maquinasArcade;
     }
 
+    public void listarJugadores() {
+        boolean hayJugadores = false;
+        for (int i = 0; i < jugadores.length ; i++) {
+            if (jugadores[i] != null) {
+                System.out.println(jugadores[i].toString());
+                System.out.println("----------------------------");
+                hayJugadores = true;
+            }
+        }
+        if (!hayJugadores){
+            System.out.println("No hay jugadores en la sala !!");
+        }
+    }
+
+    public void listarMaquinas(){
+        boolean hayAglunaMaquina = false;
+        for (int i = 0; i < maquinasArcade.length; i++){
+            if (maquinasArcade[i] != null){
+                System.out.println(maquinasArcade[i].toString());
+                System.out.println("----------------------------");
+                hayAglunaMaquina = true;
+            }
+        }
+        if (!hayAglunaMaquina){
+            System.out.println("No hay ninguna maquina en la Sala !! ");
+        }
+    }
+
     /**
      * Estamos listando las maquinas que estan activas y dando un aviso si no hay ninguna activa
      */
@@ -59,6 +92,11 @@ public class SalaRecreativa {
         }
     }
 
+    public void  SalaRecreativa (){
+        this.maquinasArcade = new MaquinaArcade[50];
+        this.jugadores = new Jugador[50];
+    }
+
     /**
      * Buscamos al jugador por su ID
      * @param identificadorJugador
@@ -70,7 +108,6 @@ public class SalaRecreativa {
         for (int i = 0; i < jugadores.length; i++){
             if (this.jugadores[i] != null && this.jugadores[i].getIdentificadorJugador().equals(identificadorJugador)){
                 jugadorAux = this.jugadores[i];
-
             }
         }
         return jugadorAux;
@@ -95,18 +132,17 @@ public class SalaRecreativa {
 
     /**
      * Añadimos a un jugador
-     * @param jugador
+     * @param jugadorNuevo
      * @return
      */
-    public boolean anhadirJugador (Jugador jugador){
-        boolean jugadoranhadido = false;
-            if (jugador != null) {
-                for (int i = 0; i < jugadores.length && !jugadoranhadido; i++) {
-                    this.jugadores[i] = jugador;
-                    jugadoranhadido = true;
-                }
-            }
-        return jugadoranhadido;
+    public boolean anhadirJugador(Jugador jugadorNuevo) {
+        boolean estaAnhadidoJugador = false;
+        if (numeroJugadores < jugadores.length) {
+            this.jugadores[numeroJugadores] = jugadorNuevo;
+            numeroJugadores++;
+            estaAnhadidoJugador = false;
+        }
+        return estaAnhadidoJugador;
     }
 
     /**
@@ -114,15 +150,14 @@ public class SalaRecreativa {
      * @param maquinaArcade
      * @return
      */
-    public boolean anhadirMaquina (MaquinaArcade maquinaArcade){
-        boolean maquinaAnhadida = false;
-        if (maquinaArcade != null) {
-            for (int i = 0; i < maquinasArcade.length && !maquinaAnhadida; i++) {
-                this.maquinasArcade[i] = maquinaArcade;
-                maquinaAnhadida = true;
-            }
+    public boolean anhadirMaquina(MaquinaArcade maquinaArcade) {
+        boolean estaAnhadida = false;
+        if (numeroMaquinas < maquinasArcade.length) {
+            this.maquinasArcade[numeroMaquinas] = maquinaArcade;
+            numeroMaquinas++;
+            estaAnhadida = true;
         }
-        return maquinaAnhadida;
+        return estaAnhadida;
     }
 
     /**
@@ -158,4 +193,23 @@ public class SalaRecreativa {
     }
 
 
+    public boolean GestionarPartida(Jugador jugadorAJugar, MaquinaArcade maquinaAJugar) {
+        boolean partidaGestionada = false;
+        if (maquinaAJugar.isEstaActiva() && jugadorAJugar.gastarCreditos(maquinaAJugar.getPrecioPartida())){
+            jugadorAJugar.gastarCreditos(maquinaAJugar.getPrecioPartida());
+            maquinaAJugar.jugarPartida(jugadorAJugar);
+            if (maquinaAJugar.getPuntuacioncadaPartida() >= 0 && maquinaAJugar.getPuntuacioncadaPartida() < 2000){
+                System.out.println(" ¡¡ OOHH !! Solo has sacado "+maquinaAJugar.getPuntuacioncadaPartida()+" puntos.");
+            }else if (maquinaAJugar.getPuntuacioncadaPartida() >= 2000 && maquinaAJugar.getPuntuacioncadaPartida() < 4000) {
+                System.out.println(" ¡¡ UUHH !! Bueno no está mal  " + maquinaAJugar.getPuntuacioncadaPartida() + " puntos.");
+            }else if (maquinaAJugar.getPuntuacioncadaPartida() >= 4000 && maquinaAJugar.getPuntuacioncadaPartida() < 6000) {
+                System.out.println(" ¡¡ EEHH OJO !! Has sacado una buena puntuación  " + maquinaAJugar.getPuntuacioncadaPartida() + " puntos.");
+            }else if (maquinaAJugar.getPuntuacioncadaPartida() >= 6000 && maquinaAJugar.getPuntuacioncadaPartida() < 8000) {
+                System.out.println(" ¡¡ EEHH OJO !! Has sacado una buena puntuación  " + maquinaAJugar.getPuntuacioncadaPartida() + " puntos.");
+            }else if (maquinaAJugar.getPuntuacioncadaPartida() >= 8000 && maquinaAJugar.getPuntuacioncadaPartida() < 9999) {
+                System.out.println(" ¡¡ OLEEE !! Has sacado una puntuación alta  " + maquinaAJugar.getPuntuacioncadaPartida() + " puntos.");
+            }
+        }
+        return partidaGestionada;
+    }
 }

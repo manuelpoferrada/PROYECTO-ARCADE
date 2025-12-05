@@ -69,6 +69,8 @@ public class Utils {
      * @return
      */
     public static int menu (){
+        System.out.println("");
+        System.out.println("");
         System.out.println("===== M E N Ú =====");
         System.out.println("1. Registrar nuevo jugador");
         System.out.println("2. Registrar una nueva máquina arcade");
@@ -84,6 +86,7 @@ public class Utils {
         System.out.println("12. Dar de baja una máquina arcade");
         System.out.println("13. Editar una máquina arcade");
         System.out.println("14. Editar un jugador");
+        System.out.println("----------------------------");
         int opcion = pideNumero(0,14,"Qué opción desea hacer: ","Error, debe ser un numero entero entre 0 y 14");
         return opcion;
     }
@@ -107,6 +110,4 @@ public class Utils {
         // nextInt(max - min + 1) genera números desde 0 hasta (max - min)
         return random.nextInt(max - min + 1) + min;
     }
-
-
 }

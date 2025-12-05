@@ -18,35 +18,25 @@ public class Jugador {
     public void setNombreJugador(String nombreJugador) {
         this.nombreJugador = nombreJugador;
     }
-
     public void setCreditosDisponibles(int creditosDisponibles) {
         this.creditosDisponibles = creditosDisponibles;
     }
-
     public void setIdentificadorJugador(String identificadorJugador) { this.identificadorJugador = identificadorJugador; }
+    public void setNumeroPartidasJugador(int numeroPartidasJugador) { this.numeroPartidasJugador = numeroPartidasJugador; }
 
     /**
      * GETTERS
      * @return
      */
-    public int getNumeroPartidasJugador() {
-        return numeroPartidasJugador;
-    }
-
+    public int getNumeroPartidasJugador() { return numeroPartidasJugador; }
     public int getCreditosDisponibles() {
         return creditosDisponibles;
     }
-
     public String getIdentificadorJugador() {
         return identificadorJugador;
     }
-
     public String getNombreJugador() {
         return nombreJugador;
-    }
-
-    public void setNumeroPartidasJugador(int numeroPartidasJugador) {
-        this.numeroPartidasJugador = numeroPartidasJugador;
     }
 
     //MÉTODOS DE NUESTRO JUGADOR MÍNIMOS PARA HACER QUE FUNCIONE
@@ -66,8 +56,7 @@ public class Jugador {
     /**
      * Recargamos los creditos del jugador
      */
-    public void recargarCreditos (){
-        int creditosSumar = Utils.pideNumero(10,100,"Ingrese desde 10 hasta 100 Créditos: ","¡¡ ERROR, debe ser un numero entero entre 10 y 100 !! ");
+    public void recargarCreditos (int creditosSumar){
         this.creditosDisponibles += creditosSumar;
     }
 
@@ -102,8 +91,6 @@ public class Jugador {
                 "\nHa jugado "+this.numeroPartidasJugador+" partidas";  //No hace falta poner el this pq no hay posibilidad de confunsión,
         //pero es para afianzar bien que el this se refiere a los datos de fuera.
     }
-
-
 
 }
 
