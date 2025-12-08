@@ -83,6 +83,7 @@ public class SalaRecreativa {
         for (int i = 0; i < maquinasArcade.length; i++){
             if (maquinasArcade[i] != null && maquinasArcade[i].isEstaActiva()){
                 System.out.println(maquinasArcade[i].toString());
+                System.out.println("");
                 System.out.println("--------------------------");
                 HayAlgunaActiva = true;
             }
@@ -140,7 +141,7 @@ public class SalaRecreativa {
         if (numeroJugadores < jugadores.length) {
             this.jugadores[numeroJugadores] = jugadorNuevo;
             numeroJugadores++;
-            estaAnhadidoJugador = false;
+            estaAnhadidoJugador = true;
         }
         return estaAnhadidoJugador;
     }
@@ -165,10 +166,10 @@ public class SalaRecreativa {
      * @return nombreJugadorMasPartidas
      */
     public String jugadorMasActivo(){
-        String nombreJugadorMasPartidas = "";
-        int numeroMaxPartidas = 0;
+        String nombreJugadorMasPartidas = "No hay jugadores en la sala";
+        int numeroMaxPartidas = -1;
         for (int i = 0 ; i < jugadores.length; i++){
-           if (jugadores[i].getNumeroPartidasJugador() > numeroMaxPartidas){
+           if (jugadores[i].getNumeroPartidasJugador() >= numeroMaxPartidas){
                numeroMaxPartidas = jugadores[i].getNumeroPartidasJugador();
                nombreJugadorMasPartidas = jugadores[i].getNombreJugador();
            }
@@ -193,10 +194,9 @@ public class SalaRecreativa {
     }
 
 
-    public boolean GestionarPartida(Jugador jugadorAJugar, MaquinaArcade maquinaAJugar) {
+    public boolean gestionarPartida(Jugador jugadorAJugar, MaquinaArcade maquinaAJugar) {
         boolean partidaGestionada = false;
         if (maquinaAJugar.isEstaActiva() && jugadorAJugar.gastarCreditos(maquinaAJugar.getPrecioPartida())){
-            jugadorAJugar.gastarCreditos(maquinaAJugar.getPrecioPartida());
             maquinaAJugar.jugarPartida(jugadorAJugar);
             if (maquinaAJugar.getPuntuacioncadaPartida() >= 0 && maquinaAJugar.getPuntuacioncadaPartida() < 2000){
                 System.out.println(" ¡¡ OOHH !! Solo has sacado "+maquinaAJugar.getPuntuacioncadaPartida()+" puntos.");

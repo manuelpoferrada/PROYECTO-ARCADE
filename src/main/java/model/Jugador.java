@@ -33,11 +33,9 @@ public class Jugador {
     public int getCreditosDisponibles() {
         return creditosDisponibles;
     }
-
     public String getIdentificadorJugador() {
         return identificadorJugador;
     }
-
     public String getNombreJugador() {
         return nombreJugador;
     }
@@ -67,13 +65,15 @@ public class Jugador {
      * Creamos el metodo para gastar los creditos en la máquina
      */
     public boolean gastarCreditos(int costePartida) {
-        // Validación obligatoria: Comprobar que el jugador tiene créditos suficientes
+        boolean gastoExitoso = false;
+
         if (costePartida > 0 && this.creditosDisponibles >= costePartida) {
-            this.creditosDisponibles -= costePartida; // Resta los créditos
-            return true;
+            this.creditosDisponibles -= costePartida;
+            gastoExitoso = true;
         }
-        return false; //No se ha podido restar porque no hay creditos disponibles
+        return gastoExitoso;
     }
+
     /**
      * Incrementamos el numero de las partidas jugadas
      */

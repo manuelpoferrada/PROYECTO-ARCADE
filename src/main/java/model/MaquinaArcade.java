@@ -98,23 +98,25 @@ public class MaquinaArcade {
     /**
      * Activar la máquina, si la máquina esta activa la desactivo y viceversa
      */
-    public void ActivarMaquina (){
-        if (estaActiva){
-            estaActiva = false;
-        } else {
-            System.out.println(" La máquina ya estaba activa ");
+    public boolean ActivarMaquina (){
+        boolean seHaActivado=false;
+        if (!estaActiva){
+            estaActiva = true;
+            seHaActivado = true;
         }
+        return seHaActivado;
     }
 
     /**
      * Desactivar la máquina, si la máquina esta activa la desactivo y viceversa
      */
-    public void DesactivarMaquina (){
-        if (!estaActiva){
-            estaActiva = true;
-        } else {
-            System.out.println(" La máquina ya estaba desactiva ");
+    public boolean DesactivarMaquina (){
+        boolean maquinaHasidoDesactivada = false;
+        if (estaActiva){
+            estaActiva = false;
+            maquinaHasidoDesactivada = true;
         }
+        return maquinaHasidoDesactivada;
     }
 
 
@@ -150,7 +152,7 @@ public class MaquinaArcade {
             //Poner el Top 1
             this.mejoresPuntuaciones[0] = nuevaPuntuacion;
             this.mejoresJugadores[0] = jugadorActualizarRanking;
-            System.out.println("Has hecho un record nuevo!" + jugadorActualizarRanking.getNombreJugador() + " ha entrado en el Top 1 con " + nuevaPuntuacion + " puntos.");
+            System.out.println(" ¡NUEVO RÉCORD! " + jugadorActualizarRanking.getNombreJugador() + " ha entrado en el Top 1 con " + nuevaPuntuacion + " puntos.");
 
         //COMPROBAR TOP 2
         } else if (nuevaPuntuacion > this.mejoresPuntuaciones[1]) {
@@ -162,7 +164,7 @@ public class MaquinaArcade {
             //Ponemos un nuevo Top 2
             this.mejoresPuntuaciones[1] = nuevaPuntuacion;
             this.mejoresJugadores[1] = jugadorActualizarRanking;
-            System.out.println("Has hecho un record nuevo!" + jugadorActualizarRanking.getNombreJugador() + " ha entrado en el Top 2 con " + nuevaPuntuacion + " puntos.");
+            System.out.println(" ¡NUEVO RÉCORD! " + jugadorActualizarRanking.getNombreJugador() + " ha entrado en el Top 2 con " + nuevaPuntuacion + " puntos.");
 
         //COMPROBAR TOP 3
         } else if (nuevaPuntuacion > mejoresPuntuaciones[2]) {
@@ -170,7 +172,7 @@ public class MaquinaArcade {
             //Ponemos un nuevo Top 3
             mejoresPuntuaciones[2] = nuevaPuntuacion;
             mejoresJugadores[2] = jugadorActualizarRanking;
-            System.out.println("¡NUEVO RÉCORD! " + jugadorActualizarRanking.getNombreJugador() +  " ha entrado en el Top 3 con " + nuevaPuntuacion + " puntos.");
+            System.out.println(" ¡NUEVO RÉCORD! " + jugadorActualizarRanking.getNombreJugador() +  " ha entrado en el Top 3 con " + nuevaPuntuacion + " puntos.");
         }
     }
 
@@ -192,6 +194,7 @@ public class MaquinaArcade {
     public int jugarPartida (Jugador jugadorVaJugar){
         this.puntuacioncadaPartida = Utils.generarAleatorio(0,9999);
         this.contadorPartidasJugadas++;
+        jugadorVaJugar.incrementarNumPartidas();
         actualizarRanking(this.puntuacioncadaPartida,jugadorVaJugar);
         comprobarMantenimiento();
         return this.puntuacioncadaPartida;
