@@ -35,7 +35,7 @@ public class Main {
                     if (sala.anhadirJugador(jugadorNuevo)){
                         System.out.println(jugadorNuevo.getNombreJugador()+" se ha añadido a la sala");
                     }else{
-                        System.out.println(jugadorNuevo.getNombreJugador()+" no se ha incorporado en la sala");
+                        System.out.println(jugadorNuevo.getNombreJugador()+" no se ha incorporado en la sala !!");
                     }
                     break;
                 case 2: //Añadimos una maquina
@@ -52,17 +52,21 @@ public class Main {
                     }
                     break;
                 case 3: //Recargar créditos a un jugador
-                    String idBuscarRecargar = "";
-                    int creditosArecargar = 0;
-                    idBuscarRecargar = Utils.pideCadena("Introduce el ID del jugador al que desee recargar creditos ");
-                    Jugador jugadorARecargar = null;
-                    jugadorARecargar=sala.buscarJugadorPorID(idBuscarRecargar);
-                    if(jugadorARecargar != null){
-                        creditosArecargar = Utils.pideNumero(10,100,"Introduce los creditos que desea recargar del jugador: ","Error, debe ser una cifra entera de (0-100)!!");
-                        jugadorARecargar.recargarCreditos(creditosArecargar);
-                        System.out.println("Se han ingresado los "+creditosArecargar+" correctamente.");
-                    }else{
-                        System.out.println(" Oh, losiento no hemos encontrado su jugador, ingrese bien su ID ");
+                    if (sala.hayJugadores()) {
+                        String idBuscarRecargar = "";
+                        int creditosArecargar = 0;
+                        idBuscarRecargar = Utils.pideCadena("Introduce el ID del jugador al que desee recargar creditos: ");
+                        Jugador jugadorARecargar = null;
+                        jugadorARecargar = sala.buscarJugadorPorID(idBuscarRecargar);
+                        if (jugadorARecargar != null) {
+                            creditosArecargar = Utils.pideNumero(10, 100, "Introduce los creditos que desea recargar del jugador: ", "Error, debe ser una cifra entera de (0-100)!!");
+                            jugadorARecargar.recargarCreditos(creditosArecargar);
+                            System.out.println("Se han ingresado los " + creditosArecargar + " correctamente.");
+                        } else {
+                            System.out.println(" Oh, losiento no hemos encontrado su jugador, ingrese bien su ID ");
+                        }
+                    } else {
+                        System.out.println("No hay ningún jugador en la sala para poder recargar creditos.");
                     }
                     break;
                 case 4: //Listar jugadores
@@ -72,53 +76,74 @@ public class Main {
                     sala.listarMaquinas();
                     break;
                 case 6: //Listar maquinas activas
-                    sala.listarMaquinasActivas();
+                    if (sala.hayMaquinas()) {
+                        sala.listarMaquinasActivas();
+                    } else {
+                        System.out.println("Ni si quiera hay maquinas en la sala ¿Cómo van a haber maquinas activas?");
+                    }
                     break;
                 case 7: //Realizar el mantenimiento a una maquina (reactivarla)
-                    String nombreMantenimiento = " ";
-                    nombreMantenimiento = Utils.pideCadena("Introduce el nombre de la maquina de la que desea realizar mantenimiento: ");
-                    MaquinaArcade maquinaARealizarMantenimiento = null;
-                    maquinaARealizarMantenimiento=sala.buscarMaquinaPorNombre(nombreMantenimiento);
-                    if (maquinaARealizarMantenimiento.ActivarMaquina()){
-                        System.out.println("La maquina "+nombreMantenimiento+" se ha activado correctamente");
+                    if (sala.hayMaquinas()) {
+                        String nombreMantenimiento = " ";
+                        nombreMantenimiento = Utils.pideCadena("Introduce el nombre de la maquina de la que desea realizar mantenimiento: ");
+                        MaquinaArcade maquinaARealizarMantenimiento = null;
+                        maquinaARealizarMantenimiento = sala.buscarMaquinaPorNombre(nombreMantenimiento);
+                        if (maquinaARealizarMantenimiento.ActivarMaquina()) {
+                            System.out.println("La maquina " + nombreMantenimiento + " se ha activado correctamente");
+                        } else {
+                            System.out.println("La maquina " + nombreMantenimiento + " ya estaba activa antes");
+                        }
                     } else {
-                        System.out.println("La maquina "+nombreMantenimiento+" ya estaba activa antes");
+                        System.out.println("No hay maquinas en sala ¿Cómo vamos a reactivar una?");
                     }
                     break;
                 case 8: //Jugar una partida;
-                    String jugadorJugarID = "";
-                    String nombreMaquinaBuscarPartida = "";
-                    jugadorJugarID = Utils.pideCadena("Selecciona el ID del jugador que quieras que juegue una partida: ");
-                    nombreMaquinaBuscarPartida = Utils.pideCadena("Introduce el nombre de la maquina en la que el jugador quiere jugar la partida: ");
-                    MaquinaArcade maquinaAJugar = sala.buscarMaquinaPorNombre(nombreMaquinaBuscarPartida);
-                    Jugador jugadorBuscarCrearPartida = sala.buscarJugadorPorID(jugadorJugarID);
-                    sala.gestionarPartida(jugadorBuscarCrearPartida,maquinaAJugar);
+                    if (sala.hayJugadores() && sala.hayMaquinas()){
+                        String jugadorJugarID = "";
+                        String nombreMaquinaBuscarPartida = "";
+                        jugadorJugarID = Utils.pideCadena("Selecciona el ID del jugador que quieras que juegue una partida: ");
+                        nombreMaquinaBuscarPartida = Utils.pideCadena("Introduce el nombre de la maquina en la que el jugador quiere jugar la partida: ");
+                        MaquinaArcade maquinaAJugar = sala.buscarMaquinaPorNombre(nombreMaquinaBuscarPartida);
+                        Jugador jugadorBuscarCrearPartida = sala.buscarJugadorPorID(jugadorJugarID);
+                        sala.gestionarPartida(jugadorBuscarCrearPartida,maquinaAJugar);
+                    } else {
+                        System.out.println("No hay jugadores en la sala/maquinas, no puedes hacerlo");
+                    }
+
                     break;
                 case 9: //Mostrar el jugador más activo;
                     if (sala.jugadorMasActivo() != null){
                         System.out.println("El jugador más activo es "+sala.jugadorMasActivo());
-                    } else {
-                        System.out.println("No hay jugador en la sala todavía o ninguna a participado");
                     }
                     break;
                 case 10: //Mostrar la máquina mas usada;
-                    System.out.println(sala.maquinaMasPartidas());
+                    if (sala.maquinaMasPartidas() != null){
+                        System.out.println("La maquina con más partidas es "+sala.maquinaMasPartidas());
+                    }
                     break;
                 case 11: //Mostrar el ranking de una maquina
-                    String nombreMaquinaBuscarRanking = "";
-                    nombreMaquinaBuscarRanking = Utils.pideCadena("Busca la maquina por el nombre que desee ver el ranking: ");
-                    MaquinaArcade mostrarRankingMaquina = sala.buscarMaquinaPorNombre(nombreMaquinaBuscarRanking);
-                    System.out.println(mostrarRankingMaquina.mostrarRanking());
+                    if (sala.hayMaquinas()) {
+                        String nombreMaquinaBuscarRanking = "";
+                        nombreMaquinaBuscarRanking = Utils.pideCadena("Busca la maquina por el nombre que desee ver el ranking: ");
+                        MaquinaArcade mostrarRankingMaquina = sala.buscarMaquinaPorNombre(nombreMaquinaBuscarRanking);
+                        System.out.println(mostrarRankingMaquina.mostrarRanking());
+                    } else {
+                        System.out.println("No hay maquinas en sala ¿Cómo vamos a mostrar el ranking?");
+                    }
                     break;
                 case 12: //Dar de baja una máquina;
-                    String nombreDesactivarMaquina = "";
-                    nombreDesactivarMaquina = Utils.pideCadena("Introduce el nombre de la maquina que quiera dar de baja: ");
-                    MaquinaArcade maquinaDarDeBaja = null;
-                    maquinaDarDeBaja = sala.buscarMaquinaPorNombre(nombreDesactivarMaquina);
-                    if (maquinaDarDeBaja.DesactivarMaquina()){
-                        System.out.println("La maquina "+nombreDesactivarMaquina+" se ha desactivado");
-                    }else {
-                        System.out.println("La maquina "+nombreDesactivarMaquina+" ya estaba dada de baja");
+                    if (sala.hayMaquinas()) {
+                        String nombreDesactivarMaquina = "";
+                        nombreDesactivarMaquina = Utils.pideCadena("Introduce el nombre de la maquina que quiera dar de baja: ");
+                        MaquinaArcade maquinaDarDeBaja = null;
+                        maquinaDarDeBaja = sala.buscarMaquinaPorNombre(nombreDesactivarMaquina);
+                        if (maquinaDarDeBaja.DesactivarMaquina()) {
+                            System.out.println("La maquina " + nombreDesactivarMaquina + " se ha desactivado");
+                        } else {
+                            System.out.println("La maquina " + nombreDesactivarMaquina + " ya estaba dada de baja");
+                        }
+                    } else {
+                        System.out.println("No hay ninguna máquina en sala ¿Cómo vamos a dar de baja una máquina?");
                     }
                     break;
                 case 13: //Editar una maquina de arcade break;

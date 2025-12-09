@@ -216,7 +216,7 @@ public class MaquinaArcade {
                 nombreJugador = "Vacío";
             }
 
-            // Sino
+            // En el "ranking" se van añadiendo líneas de texto para finalmente cuando acabe el for ser mostrado por pantalla
             ranking += "\nTop " + (i + 1) + ": " + mejoresPuntuaciones[i] + " puntos, conseguidos por: " + nombreJugador;
         }
         return ranking;

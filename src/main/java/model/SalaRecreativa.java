@@ -6,47 +6,28 @@ public class SalaRecreativa {
     private int numeroJugadores = 0;
     private int numeroMaquinas = 0;
 
+    /**
+     * Conctructor que inicia los arrays a 50 y 20
+     */
     public SalaRecreativa() {
         this.jugadores = new Jugador[50];
         this.maquinasArcade = new MaquinaArcade[20];
     }
 
-    /**
-     * Funcionalidades mínimas:
-     *      --> Registrar nuevos jugadores
-     *      --> Registrar nuevas máquinas
-     *      --> Buscar un jugador por ID
-     *      --> Buscar una máquina por nombre
-     *      --> Listar jugadores
-     *      --> Listar máquinas
-     *      --> Listar únicamente máquinas activas
-     *      --> Obtener el jugador más activo
-     *      --> Obtener la máquina con más partidas jugadas
-     *      --> Gestionar una partida:
-     *          >> Comprobar que la máquina está activa
-     *          >> Comprobar que el jugador tiene créditos suficientes
-     *          >> Descontar créditos al jugador
-     *          >> Hacer que el jugador juegue en la máquina.
-     *          >> Mostrar un mensaje que indique la puntuación obtenida por el jugador en la máquina.
-     *          >> Devolverá true si se ha jugado
-     */
+    //GETTERS
 
-    /**
-     * Listamos los jugadores
-     * @return
-     */
     public Jugador[] getJugadores() {
         return jugadores;
     }
-
-    /**
-     * Listamos las maquinas
-     * @return
-     */
     public MaquinaArcade[] getMaquinasArcade() {
         return maquinasArcade;
     }
 
+    //METODOS MINIMOS PARA QUE NUESTRA SALA RECREATIVA SEA FUNCIONAL
+
+    /**
+     * Metodo que muestra por pantalla todos los jugadores de nuestra sala
+     */
     public void listarJugadores() {
         boolean hayJugadores = false;
         for (int i = 0; i < jugadores.length ; i++) {
@@ -61,6 +42,9 @@ public class SalaRecreativa {
         }
     }
 
+    /**
+     * Metodo que muestra todas las maquinas de nuestra sala
+     */
     public void listarMaquinas(){
         boolean hayAglunaMaquina = false;
         for (int i = 0; i < maquinasArcade.length; i++){
@@ -89,13 +73,8 @@ public class SalaRecreativa {
             }
         }
         if (!HayAlgunaActiva){
-            System.out.println("No hay ninguna máquina activa en este momento.");
+            System.out.println("Ninguna máquina esta activa");
         }
-    }
-
-    public void  SalaRecreativa (){
-        this.maquinasArcade = new MaquinaArcade[50];
-        this.jugadores = new Jugador[50];
     }
 
     /**
@@ -166,9 +145,9 @@ public class SalaRecreativa {
      * @return nombreJugadorMasPartidas
      */
     public String jugadorMasActivo(){
-        String nombreJugadorMasPartidas = "No hay jugadores en la sala";
+        String nombreJugadorMasPartidas = "ninguno, no hay jugadores en sala.";
         int numeroMaxPartidas = -1;
-        for (int i = 0 ; i < jugadores.length; i++){
+        for (int i = 0 ; i < jugadores.length && jugadores[i] != null; i++){
            if (jugadores[i].getNumeroPartidasJugador() >= numeroMaxPartidas){
                numeroMaxPartidas = jugadores[i].getNumeroPartidasJugador();
                nombreJugadorMasPartidas = jugadores[i].getNombreJugador();
@@ -178,13 +157,42 @@ public class SalaRecreativa {
     }
 
     /**
+     * Comprobamos si hay jugadores en la sala para poder hacer algo
+     * @return
+     */
+    public boolean hayJugadores (){
+        boolean hayJugadoreEnSala = false;
+        for (int i = 0; i < jugadores.length && jugadores[i]!=null;i++ ){
+            if (jugadores[i]!=null){
+                hayJugadoreEnSala = true;
+            }
+        }
+        return hayJugadoreEnSala;
+    }
+
+    /**
+     * Comprobamos si hay jugadores en la sala para poder hacer algo
+     * @return
+     */
+    public boolean hayMaquinas (){
+        boolean hayMaquinasEnSala = false;
+        for (int i = 0; i < maquinasArcade.length && maquinasArcade[i]!=null;i++ ){
+            if (maquinasArcade[i]!=null){
+                hayMaquinasEnSala = true;
+            }
+        }
+        return hayMaquinasEnSala;
+    }
+
+
+    /**
      * Devolvemos una cadena que contiende el nombre de la maquina con mas partidas jugadas
      * @return
      */
     public String maquinaMasPartidas(){
-        String maquinaMasPartidasJugadas = "";
+        String maquinaMasPartidasJugadas = "ninguna, no hay jugadores en sala.";
         int numeroMaxPartidas = 0;
-        for (int i = 0 ; i < maquinasArcade.length; i++){
+        for (int i = 0 ; i < maquinasArcade.length && maquinasArcade[i] != null; i++){
             if (maquinasArcade[i].getContadorPartidasJugadas() > numeroMaxPartidas){
                 numeroMaxPartidas = maquinasArcade[i].getContadorPartidasJugadas();
                 maquinaMasPartidasJugadas = maquinasArcade[i].getNombreMaquina();
@@ -194,9 +202,16 @@ public class SalaRecreativa {
     }
 
 
+    /**
+     * Nos encargamos de jugar la partida si de cumplen los requisitos de poder jugarla, poder gastar creditos y que la maquina este activa
+     * @param jugadorAJugar
+     * @param maquinaAJugar
+     * @return
+     */
     public boolean gestionarPartida(Jugador jugadorAJugar, MaquinaArcade maquinaAJugar) {
-        boolean partidaGestionada = false;
+        boolean partidaNoGestionada = true;
         if (maquinaAJugar.isEstaActiva() && jugadorAJugar.gastarCreditos(maquinaAJugar.getPrecioPartida())){
+            partidaNoGestionada = false;
             maquinaAJugar.jugarPartida(jugadorAJugar);
             if (maquinaAJugar.getPuntuacioncadaPartida() >= 0 && maquinaAJugar.getPuntuacioncadaPartida() < 2000){
                 System.out.println(" ¡¡ OOHH !! Solo has sacado "+maquinaAJugar.getPuntuacioncadaPartida()+" puntos.");
@@ -210,6 +225,6 @@ public class SalaRecreativa {
                 System.out.println(" ¡¡ OLEEE !! Has sacado una puntuación alta  " + maquinaAJugar.getPuntuacioncadaPartida() + " puntos.");
             }
         }
-        return partidaGestionada;
+        return partidaNoGestionada;
     }
 }
