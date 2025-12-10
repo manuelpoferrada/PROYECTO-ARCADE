@@ -138,7 +138,7 @@ public class MaquinaArcade {
      * @param nuevaPuntuacion
      * @param jugadorActualizarRanking
      */
-    private void actualizarRanking(int nuevaPuntuacion, Jugador jugadorActualizarRanking) {
+    public void actualizarRanking(int nuevaPuntuacion, Jugador jugadorActualizarRanking) {
 
         //COMPROBAR TOP 1
         if (nuevaPuntuacion > this.mejoresPuntuaciones[0]) {

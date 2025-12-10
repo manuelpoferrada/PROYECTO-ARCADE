@@ -118,6 +118,7 @@ public class SalaRecreativa {
     public boolean anhadirJugador(Jugador jugadorNuevo) {
         boolean estaAnhadidoJugador = false;
         if (numeroJugadores < jugadores.length) {
+            //EN EL NUMERO DE JUGADORES NUEVO QUE AHI INTRODUCIMOS EL NUEVO JUGADOR
             this.jugadores[numeroJugadores] = jugadorNuevo;
             numeroJugadores++;
             estaAnhadidoJugador = true;

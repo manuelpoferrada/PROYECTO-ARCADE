@@ -27,11 +27,15 @@ public class Main {
             opcion = Utils.menu();
             switch (opcion){
                 case 1: //Añadimos un jugador
+                    //SALIDA POR PANTALLA
                     System.out.println("¡¡ VAMOS A REGISTRAR UN NUEVO JUGADOR !!");
                     System.out.println("");
+                    //PEDIMOS UN NOMBRE AL JUGADOR Y ID PARA ASI CREAR UN NUEVO JUGADOR CON DICHOS VALORES
                     nombreJugador = Utils.pideCadena("Introduzca un nombre para el jugador nuevo: ");
                     id = Utils.pideCadena("Introduzca un id para el jugador "+nombreJugador+" : ");
+                    //CREAMOS UN JUGADOR PARA PASARLO SIEMPRE EN AÑADIR JUGADOR Y ASÍ CREAR UN NUEVO
                     Jugador jugadorNuevo = new Jugador(nombreJugador,id);
+                    //ESTE METODO DEVUELVE UN BOOLEAN Y INDICA SI SE HA AÑADIDO A LA SALA O NO
                     if (sala.anhadirJugador(jugadorNuevo)){
                         System.out.println(jugadorNuevo.getNombreJugador()+" se ha añadido a la sala");
                     }else{
